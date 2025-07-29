@@ -32,8 +32,8 @@ const updateMetricsData = () => {
 const updateRevenueData = () => {
   return revenueData.map(item => ({
     ...item,
-    revenue: generateRandomChange(item.revenue, 8),
-    profit: generateRandomChange(item.profit, 8)
+    revenue: generateRandomChange(item.revenue || 0, 8),
+    profit: generateRandomChange(item.profit || 0, 8)
   }))
 }
 
@@ -51,8 +51,8 @@ const updateTableData = () => {
 export function useRealTimeUpdates(intervalMs: number = 5000) {
   const [metrics, setMetrics] = useState(metricsData)
   const [revenue, setRevenue] = useState(revenueData)
-  const [traffic] = useState(trafficData)
-  const [campaign] = useState(campaignData)
+  const [traffic, setTraffic] = useState(trafficData)
+  const [campaign, setCampaign] = useState(campaignData)
   const [table, setTable] = useState(tableData)
   const [lastUpdate, setLastUpdate] = useState(() => new Date())
 

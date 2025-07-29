@@ -8,8 +8,12 @@ export interface MetricCard {
 
 export interface ChartData {
   name: string
-  value: number
-  [key: string]: string | number
+  value?: number
+  revenue?: number
+  profit?: number
+  clicks?: number
+  impressions?: number
+  ctr?: number
 }
 
 export interface TableData {

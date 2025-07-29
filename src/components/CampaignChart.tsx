@@ -60,7 +60,7 @@ export function CampaignChart({ data = campaignData }: CampaignChartProps) {
                             Clicks
                           </span>
                           <span className="font-bold text-primary">
-                            {payload[0]?.value}
+                            {payload[0]?.value as number}
                           </span>
                         </div>
                         <div className="flex flex-col">
@@ -68,7 +68,7 @@ export function CampaignChart({ data = campaignData }: CampaignChartProps) {
                             CTR
                           </span>
                           <span className="font-bold text-emerald-600 dark:text-emerald-400">
-                            {payload[1]?.value}%
+                            {(payload[1]?.value as number)}%
                           </span>
                         </div>
                       </div>

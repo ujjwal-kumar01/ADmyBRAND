@@ -61,7 +61,7 @@ export function RevenueChart({ data = revenueData }: RevenueChartProps) {
                             Revenue
                           </span>
                           <span className="font-bold text-primary">
-                            ${Math.round(payload[0]?.value || 0)}
+                            ${Math.round((payload[0]?.value as number) || 0)}
                           </span>
                         </div>
                         <div className="flex flex-col">
@@ -69,7 +69,7 @@ export function RevenueChart({ data = revenueData }: RevenueChartProps) {
                             Profit
                           </span>
                           <span className="font-bold text-emerald-600 dark:text-emerald-400">
-                            ${Math.round(payload[1]?.value || 0)}
+                            ${Math.round((payload[1]?.value as number) || 0)}
                           </span>
                         </div>
                       </div>

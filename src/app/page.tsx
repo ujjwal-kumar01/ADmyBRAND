@@ -107,8 +107,8 @@ export default function Home() {
                   const currentTime = mounted ? new Date().toLocaleTimeString() : 'Unknown Time'
 
                   // Create a comprehensive text report with safe data handling
-                  const totalRevenue = revenue?.reduce((sum, item) => sum + (item?.revenue || 0), 0) || 0
-                  const totalProfit = revenue?.reduce((sum, item) => sum + (item?.profit || 0), 0) || 0
+                  const totalRevenue = revenue?.reduce((sum, item) => sum + ((item?.revenue as number) || 0), 0) || 0
+                  const totalProfit = revenue?.reduce((sum, item) => sum + ((item?.profit as number) || 0), 0) || 0
                   const totalTraffic = traffic?.reduce((sum, item) => sum + (item?.value || 0), 0) || 0
                   const totalCampaigns = campaign?.reduce((sum, item) => sum + (item?.value || 0), 0) || 0
 
@@ -258,7 +258,7 @@ export default function Home() {
                             <strong>Revenue by Month:</strong><br>
                             ${revenue?.map(item => `
                               <div class="data-item">
-                                ${item?.month || 'Unknown'}: $${(item?.revenue || 0).toLocaleString()} (Profit: $${(item?.profit || 0).toLocaleString()})
+                                ${item?.name || 'Unknown'}: $${((item?.revenue as number) || 0).toLocaleString()} (Profit: $${((item?.profit as number) || 0).toLocaleString()})
                               </div>
                             `).join('') || 'No revenue data available'}
                           </div>

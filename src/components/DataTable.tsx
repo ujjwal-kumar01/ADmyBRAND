@@ -34,13 +34,14 @@ export function DataTable({ data = tableData }: DataTableProps) {
       const matchesStatus = statusFilter === 'all' || item.status === statusFilter
       
       // Date range filtering
-      let matchesDateRange = true
-      if (dateRange.startDate && dateRange.endDate) {
-        const itemDate = new Date(item.date)
-        const startDate = new Date(dateRange.startDate)
-        const endDate = new Date(dateRange.endDate)
-        matchesDateRange = itemDate >= startDate && itemDate <= endDate
-      }
+      const matchesDateRange = dateRange.startDate && dateRange.endDate
+        ? (() => {
+            const itemDate = new Date(item.date)
+            const startDate = new Date(dateRange.startDate)
+            const endDate = new Date(dateRange.endDate)
+            return itemDate >= startDate && itemDate <= endDate
+          })()
+        : true
       
       return matchesSearch && matchesStatus && matchesDateRange
     })
