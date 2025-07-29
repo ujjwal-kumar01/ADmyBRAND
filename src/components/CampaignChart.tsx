@@ -2,10 +2,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
-import { campaignData } from "@/lib/data"
+import { campaignData, ChartData } from "@/lib/data"
 import { useEffect, useState } from "react"
 
-export function CampaignChart() {
+interface CampaignChartProps {
+  data?: ChartData[]
+}
+
+export function CampaignChart({ data = campaignData }: CampaignChartProps) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -32,7 +36,7 @@ export function CampaignChart() {
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={campaignData}>
+          <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
             <XAxis 
               dataKey="name" 

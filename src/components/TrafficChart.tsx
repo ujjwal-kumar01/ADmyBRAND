@@ -2,12 +2,16 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts"
-import { trafficData } from "@/lib/data"
+import { trafficData, ChartData } from "@/lib/data"
 import { useEffect, useState } from "react"
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8']
 
-export function TrafficChart() {
+interface TrafficChartProps {
+  data?: ChartData[]
+}
+
+export function TrafficChart({ data = trafficData }: TrafficChartProps) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -26,7 +30,7 @@ export function TrafficChart() {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={trafficData}
+                data={data}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -36,7 +40,7 @@ export function TrafficChart() {
                 dataKey="value"
                 className="hover:scale-105 transition-transform duration-200"
               >
-                {trafficData.map((entry, index) => (
+                {data.map((entry, index) => (
                   <Cell 
                     key={`cell-${index}`} 
                     fill={COLORS[index % COLORS.length]}

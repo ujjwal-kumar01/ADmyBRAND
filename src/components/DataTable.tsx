@@ -5,16 +5,22 @@ import { tableData, TableData } from "@/lib/data"
 import { formatCurrency, formatNumber } from "@/lib/utils"
 import { useState, useMemo, useEffect } from "react"
 import { ChevronDown, ChevronUp, Search } from "lucide-react"
+import { DateRangePicker } from "./DateRangePicker"
 
 type SortField = keyof TableData
 type SortDirection = 'asc' | 'desc'
 
-export function DataTable() {
+interface DataTableProps {
+  data?: TableData[]
+}
+
+export function DataTable({ data = tableData }: DataTableProps) {
   const [searchTerm, setSearchTerm] = useState("")
   const [sortField, setSortField] = useState<SortField>('date')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [currentPage, setCurrentPage] = useState(1)
   const [statusFilter, setStatusFilter] = useState<string>('all')
+  const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" })
   const [mounted, setMounted] = useState(false)
   const itemsPerPage = 5
 
@@ -23,10 +29,20 @@ export function DataTable() {
   }, [])
 
   const filteredData = useMemo(() => {
-    let filtered = tableData.filter(item => {
+    let filtered = data.filter(item => {
       const matchesSearch = item.campaign.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesStatus = statusFilter === 'all' || item.status === statusFilter
-      return matchesSearch && matchesStatus
+      
+      // Date range filtering
+      let matchesDateRange = true
+      if (dateRange.startDate && dateRange.endDate) {
+        const itemDate = new Date(item.date)
+        const startDate = new Date(dateRange.startDate)
+        const endDate = new Date(dateRange.endDate)
+        matchesDateRange = itemDate >= startDate && itemDate <= endDate
+      }
+      
+      return matchesSearch && matchesStatus && matchesDateRange
     })
 
     filtered.sort((a, b) => {
@@ -47,7 +63,7 @@ export function DataTable() {
     })
 
     return filtered
-  }, [searchTerm, sortField, sortDirection, statusFilter])
+  }, [searchTerm, sortField, sortDirection, statusFilter, dateRange])
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage)
   const paginatedData = filteredData.slice(
@@ -100,33 +116,42 @@ export function DataTable() {
   }
 
   return (
-    <Card className="col-span-4 transition-all duration-300 hover:shadow-lg">
-      <CardHeader>
-        <CardTitle className="hover:text-primary transition-colors duration-200">Campaign Analytics</CardTitle>
-        <div className="flex gap-4">
-          <div className="relative flex-1 group">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-200" />
-            <input
-              type="text"
-              placeholder="Search campaigns..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50 group-hover:border-primary/50"
-            />
+    <div className="col-span-4 space-y-4">
+      {/* Filters Section */}
+      <div className="grid gap-4 md:grid-cols-1">
+        <DateRangePicker 
+          onDateRangeChange={setDateRange}
+          className="md:col-span-1"
+        />
+      </div>
+
+      <Card className="transition-all duration-300 hover:shadow-lg">
+        <CardHeader>
+          <CardTitle className="hover:text-primary transition-colors duration-200">Campaign Analytics</CardTitle>
+          <div className="flex gap-4">
+            <div className="relative flex-1 group">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-200" />
+              <input
+                type="text"
+                placeholder="Search campaigns..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50 group-hover:border-primary/50"
+              />
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50 hover:bg-muted/50"
+              aria-label="Filter by status"
+            >
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="paused">Paused</option>
+              <option value="completed">Completed</option>
+            </select>
           </div>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50 hover:bg-muted/50"
-            aria-label="Filter by status"
-          >
-            <option value="all">All Status</option>
-            <option value="active">Active</option>
-            <option value="paused">Paused</option>
-            <option value="completed">Completed</option>
-          </select>
-        </div>
-      </CardHeader>
+        </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -262,5 +287,6 @@ export function DataTable() {
         </div>
       </CardContent>
     </Card>
+    </div>
   )
 } 

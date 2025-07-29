@@ -2,10 +2,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
-import { revenueData } from "@/lib/data"
+import { revenueData, ChartData } from "@/lib/data"
 import { useEffect, useState } from "react"
 
-export function RevenueChart() {
+interface RevenueChartProps {
+  data?: ChartData[]
+}
+
+export function RevenueChart({ data = revenueData }: RevenueChartProps) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -32,7 +36,7 @@ export function RevenueChart() {
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={350}>
-          <LineChart data={revenueData}>
+          <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
             <XAxis 
               dataKey="name" 
@@ -57,7 +61,7 @@ export function RevenueChart() {
                             Revenue
                           </span>
                           <span className="font-bold text-primary">
-                            ${payload[0]?.value}
+                            ${Math.round(payload[0]?.value || 0)}
                           </span>
                         </div>
                         <div className="flex flex-col">
@@ -65,7 +69,7 @@ export function RevenueChart() {
                             Profit
                           </span>
                           <span className="font-bold text-emerald-600 dark:text-emerald-400">
-                            ${payload[1]?.value}
+                            ${Math.round(payload[1]?.value || 0)}
                           </span>
                         </div>
                       </div>
