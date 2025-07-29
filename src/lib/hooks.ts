@@ -3,7 +3,12 @@ import { metricsData, revenueData, trafficData, campaignData, tableData } from '
 
 // Simulate real-time data updates
 const generateRandomChange = (baseValue: number, maxChangePercent: number = 5) => {
-  const changePercent = (Math.random() - 0.5) * maxChangePercent
+  // Use a seeded random to ensure consistent results during SSR
+  const seededRandom = () => {
+    const x = Math.sin(Date.now() * 0.001) * 10000
+    return x - Math.floor(x)
+  }
+  const changePercent = (seededRandom() - 0.5) * maxChangePercent
   return baseValue * (1 + changePercent / 100)
 }
 
@@ -49,7 +54,7 @@ export function useRealTimeUpdates(intervalMs: number = 5000) {
   const [traffic, setTraffic] = useState(trafficData)
   const [campaign, setCampaign] = useState(campaignData)
   const [table, setTable] = useState(tableData)
-  const [lastUpdate, setLastUpdate] = useState(new Date())
+  const [lastUpdate, setLastUpdate] = useState(() => new Date())
 
   const updateData = useCallback(() => {
     setMetrics(updateMetricsData())

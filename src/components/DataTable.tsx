@@ -95,7 +95,11 @@ export function DataTable({ data = tableData }: DataTableProps) {
 
   const formatDate = (dateString: string) => {
     if (!mounted) return dateString // Return raw string during SSR
-    return new Date(dateString).toLocaleDateString()
+    try {
+      return new Date(dateString).toLocaleDateString()
+    } catch {
+      return dateString
+    }
   }
 
   if (!mounted) {
