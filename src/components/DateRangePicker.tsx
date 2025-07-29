@@ -35,43 +35,43 @@ export function DateRangePicker({ onDateRangeChange, className }: DateRangePicke
   return (
     <Card className={`transition-all duration-300 hover:shadow-lg ${className}`}>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 hover:text-primary transition-colors duration-200">
-          <Calendar className="h-5 w-5" />
+        <CardTitle className="flex items-center gap-2 hover:text-primary transition-colors duration-200 text-sm sm:text-base">
+          <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
           Date Range Filter
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <div className="flex-1">
-              <label className="block text-sm font-medium mb-2 text-muted-foreground">
+              <label className="block text-xs sm:text-sm font-medium mb-2 text-muted-foreground">
                 Start Date
               </label>
               <input
                 type="date"
                 value={dateRange.startDate}
                 onChange={(e) => handleDateChange('startDate', e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50"
+                className="w-full px-2 sm:px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50 text-sm"
                 aria-label="Start date"
                 title="Select start date"
               />
             </div>
             <div className="flex-1">
-              <label className="block text-sm font-medium mb-2 text-muted-foreground">
+              <label className="block text-xs sm:text-sm font-medium mb-2 text-muted-foreground">
                 End Date
               </label>
               <input
                 type="date"
                 value={dateRange.endDate}
                 onChange={(e) => handleDateChange('endDate', e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50"
+                className="w-full px-2 sm:px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 hover:border-primary/50 text-sm"
                 aria-label="End date"
                 title="Select end date"
               />
             </div>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => {
                 const today = new Date()
@@ -83,7 +83,7 @@ export function DateRangePicker({ onDateRangeChange, className }: DateRangePicke
                 setDateRange(newRange)
                 onDateRangeChange(newRange)
               }}
-              className="px-3 py-1 text-sm border rounded-md hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200"
+              className="px-2 sm:px-3 py-1 text-xs sm:text-sm border rounded-md hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200"
             >
               Last 7 Days
             </button>
@@ -98,7 +98,7 @@ export function DateRangePicker({ onDateRangeChange, className }: DateRangePicke
                 setDateRange(newRange)
                 onDateRangeChange(newRange)
               }}
-              className="px-3 py-1 text-sm border rounded-md hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200"
+              className="px-2 sm:px-3 py-1 text-xs sm:text-sm border rounded-md hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200"
             >
               Last 30 Days
             </button>
@@ -107,7 +107,7 @@ export function DateRangePicker({ onDateRangeChange, className }: DateRangePicke
                 setDateRange({ startDate: "", endDate: "" })
                 onDateRangeChange({ startDate: "", endDate: "" })
               }}
-              className="px-3 py-1 text-sm border rounded-md hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200"
+              className="px-2 sm:px-3 py-1 text-xs sm:text-sm border rounded-md hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200"
             >
               Clear
             </button>

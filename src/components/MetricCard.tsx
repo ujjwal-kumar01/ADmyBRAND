@@ -26,13 +26,13 @@ export function MetricCard({ metric }: MetricCardProps) {
   return (
     <Card className="transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 hover:border-primary/50 group cursor-pointer">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+        <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">
           {metric.title}
         </CardTitle>
-        <Icon className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all duration-200" />
+        <Icon className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all duration-200" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold group-hover:text-primary transition-colors duration-200">{metric.value}</div>
+        <div className="text-lg sm:text-xl lg:text-2xl font-bold group-hover:text-primary transition-colors duration-200">{metric.value}</div>
         <p className={cn(
           "text-xs flex items-center gap-1 mt-1 transition-all duration-200",
           metric.changeType === "increase" 

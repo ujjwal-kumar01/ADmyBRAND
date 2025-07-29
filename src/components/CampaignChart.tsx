@@ -30,9 +30,9 @@ export function CampaignChart({ data = campaignData }: CampaignChartProps) {
   }
 
   return (
-    <Card className="col-span-2 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+    <Card className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
       <CardHeader>
-        <CardTitle className="hover:text-primary transition-colors duration-200">Campaign Performance</CardTitle>
+        <CardTitle className="hover:text-primary transition-colors duration-200 text-sm sm:text-base">Campaign Performance</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>

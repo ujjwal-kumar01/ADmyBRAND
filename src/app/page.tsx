@@ -35,37 +35,37 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 text-center transition-all duration-200 hover:scale-[1.01]">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <h2 className="text-3xl font-bold tracking-tight hover:text-primary transition-colors duration-200 cursor-pointer">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+        <div className="mb-6 sm:mb-8 text-center transition-all duration-200 hover:scale-[1.01]">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight hover:text-primary transition-colors duration-200 cursor-pointer">
               Dashboard
             </h2>
             <button
               onClick={updateData}
-              className="p-2 rounded-full hover:bg-muted transition-all duration-200 hover:scale-110"
+              className="p-1.5 sm:p-2 rounded-full hover:bg-muted transition-all duration-200 hover:scale-110"
               aria-label="Refresh data"
             >
-              <RefreshCw className="h-5 w-5" />
+              <RefreshCw className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
-          <p className="text-muted-foreground hover:text-foreground transition-colors duration-200 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200 max-w-2xl mx-auto px-4">
             Welcome to your analytics dashboard. Here's an overview of your performance.
           </p>
-                     <ClientOnly fallback={<div className="h-4" />}>
-             <div className="flex items-center justify-center gap-4 mt-2">
-               <p className="text-xs text-muted-foreground">
-                 Last updated: {lastUpdate.toLocaleTimeString()}
-               </p>
-               <RealTimeIndicator isActive={isLiveMode} />
-             </div>
-           </ClientOnly>
+          <ClientOnly fallback={<div className="h-4" />}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-2">
+              <p className="text-xs text-muted-foreground">
+                Last updated: {lastUpdate.toLocaleTimeString()}
+              </p>
+              <RealTimeIndicator isActive={isLiveMode} />
+            </div>
+          </ClientOnly>
         </div>
 
-                 {/* Export Section */}
-         <ClientOnly fallback={<div className="h-12" />}>
-           <div className="mb-8 flex justify-center">
-             <div className="flex gap-4">
+        {/* Export Section */}
+        <ClientOnly fallback={<div className="h-12" />}>
+          <div className="mb-6 sm:mb-8 flex justify-center">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
             <button
               onClick={() => {
                 // CSV Export
@@ -94,14 +94,14 @@ export default function Home() {
                 link.click()
                 document.body.removeChild(link)
               }}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
+              className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base"
             >
               <FileSpreadsheet className="h-4 w-4" />
               Export CSV
             </button>
             
-                         <button
-               onClick={() => {
+            <button
+              onClick={() => {
                  // Direct PDF Download
                  try {
                    const currentDate = mounted ? new Date().toLocaleDateString() : 'Unknown Date'
@@ -242,25 +242,16 @@ export default function Home() {
                      </html>
                    `
                    
-                   // Open in new window and trigger print to PDF
-                   const pdfWindow = window.open('', '_blank', 'width=800,height=600')
-                   if (!pdfWindow) {
-                     alert('Please allow pop-ups for this site to export PDF')
-                     return
-                   }
-                   
-                   pdfWindow.document.write(htmlContent)
-                   pdfWindow.document.close()
-                   
-                   // Auto-print to PDF after content loads
-                   pdfWindow.onload = function() {
-                     setTimeout(() => {
-                       pdfWindow.print()
-                       setTimeout(() => {
-                         pdfWindow.close()
-                       }, 1000)
-                     }, 500)
-                   }
+                   // Create blob and download as PDF
+                   const blob = new Blob([htmlContent], { type: 'application/pdf' })
+                   const url = URL.createObjectURL(blob)
+                   const link = document.createElement('a')
+                   link.href = url
+                   link.download = `analytics-report-${mounted ? new Date().toISOString().split('T')[0] : 'data'}.pdf`
+                   document.body.appendChild(link)
+                   link.click()
+                   document.body.removeChild(link)
+                   URL.revokeObjectURL(url)
                    
                  } catch (error) {
                    console.error('PDF export error:', error)
@@ -275,31 +266,35 @@ export default function Home() {
 
             <button
               onClick={() => setIsLiveMode(!isLiveMode)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl ${
-                isLiveMode 
-                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white' 
-                  : 'bg-gray-600 hover:bg-gray-700 text-white'
-              }`}
-            >
-              <Circle className={`h-4 w-4 ${isLiveMode ? 'animate-pulse' : ''}`} />
-              {isLiveMode ? 'Live Mode' : 'Static Mode'}
-                         </button>
+                             className={`flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-md transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base ${
+                 isLiveMode 
+                   ? 'bg-emerald-600 hover:bg-emerald-700 text-white' 
+                   : 'bg-gray-600 hover:bg-gray-700 text-white'
+               }`}
+             >
+               <Circle className={`h-4 w-4 ${isLiveMode ? 'animate-pulse' : ''}`} />
+               {isLiveMode ? 'Live Mode' : 'Static Mode'}
+             </button>
            </div>
          </div>
          </ClientOnly>
 
         {/* Metrics Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-6 sm:mb-8">
           {metrics.map((metric, index) => (
             <MetricCard key={index} metric={metric} />
           ))}
         </div>
 
         {/* Charts */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-          <RevenueChart data={revenue} />
-          <TrafficChart data={traffic} />
-          <CampaignChart data={campaign} />
+        <div className="space-y-4 mb-6 sm:mb-8">
+          <div>
+            <RevenueChart data={revenue} />
+          </div>
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+            <TrafficChart data={traffic} />
+            <CampaignChart data={campaign} />
+          </div>
         </div>
 
         {/* Data Table */}

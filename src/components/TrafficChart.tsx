@@ -19,13 +19,13 @@ export function TrafficChart({ data = trafficData }: TrafficChartProps) {
   }, [])
 
   return (
-    <Card className="col-span-2 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+    <Card className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
       <CardHeader>
-        <CardTitle className="hover:text-primary transition-colors duration-200">Traffic Sources</CardTitle>
+        <CardTitle className="hover:text-primary transition-colors duration-200 text-sm sm:text-base">Traffic Sources</CardTitle>
       </CardHeader>
       <CardContent>
         {!mounted ? (
-          <div className="h-[300px] animate-pulse bg-gray-200 rounded"></div>
+          <div className="h-[200px] sm:h-[250px] lg:h-[300px] animate-pulse bg-gray-200 rounded"></div>
         ) : (
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>

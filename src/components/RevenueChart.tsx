@@ -30,9 +30,9 @@ export function RevenueChart({ data = revenueData }: RevenueChartProps) {
   }
 
   return (
-    <Card className="col-span-4 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+    <Card className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
       <CardHeader>
-        <CardTitle className="hover:text-primary transition-colors duration-200">Revenue Overview</CardTitle>
+        <CardTitle className="hover:text-primary transition-colors duration-200 text-sm sm:text-base">Revenue Overview</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={350}>
