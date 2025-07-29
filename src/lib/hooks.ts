@@ -51,8 +51,8 @@ const updateTableData = () => {
 export function useRealTimeUpdates(intervalMs: number = 5000) {
   const [metrics, setMetrics] = useState(metricsData)
   const [revenue, setRevenue] = useState(revenueData)
-  const [traffic, setTraffic] = useState(trafficData)
-  const [campaign, setCampaign] = useState(campaignData)
+  const [traffic] = useState(trafficData)
+  const [campaign] = useState(campaignData)
   const [table, setTable] = useState(tableData)
   const [lastUpdate, setLastUpdate] = useState(() => new Date())
 

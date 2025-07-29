@@ -29,7 +29,7 @@ export function DataTable({ data = tableData }: DataTableProps) {
   }, [])
 
   const filteredData = useMemo(() => {
-    let filtered = data.filter(item => {
+    const filtered = data.filter(item => {
       const matchesSearch = item.campaign.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesStatus = statusFilter === 'all' || item.status === statusFilter
       
@@ -45,7 +45,7 @@ export function DataTable({ data = tableData }: DataTableProps) {
       return matchesSearch && matchesStatus && matchesDateRange
     })
 
-    filtered.sort((a, b) => {
+    return filtered.sort((a, b) => {
       const aValue = a[sortField]
       const bValue = b[sortField]
       
@@ -61,9 +61,7 @@ export function DataTable({ data = tableData }: DataTableProps) {
       
       return 0
     })
-
-    return filtered
-  }, [searchTerm, sortField, sortDirection, statusFilter, dateRange])
+  }, [data, searchTerm, sortField, sortDirection, statusFilter, dateRange])
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage)
   const paginatedData = filteredData.slice(

@@ -9,7 +9,7 @@ export interface MetricCard {
 export interface ChartData {
   name: string
   value: number
-  [key: string]: any
+  [key: string]: string | number
 }
 
 export interface TableData {

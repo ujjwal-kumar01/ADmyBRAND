@@ -50,7 +50,7 @@ export function CampaignChart({ data = campaignData }: CampaignChartProps) {
               axisLine={false}
             />
             <Tooltip 
-              content={({ active, payload, label }) => {
+              content={({ active, payload }) => {
                 if (active && payload && payload.length) {
                   return (
                     <div className="rounded-lg border bg-background p-3 shadow-lg transition-all duration-200 hover:shadow-xl">

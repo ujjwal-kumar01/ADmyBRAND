@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, ChevronDown } from "lucide-react"
+import { Calendar } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface DateRange {
@@ -15,7 +15,6 @@ interface DateRangePickerProps {
 }
 
 export function DateRangePicker({ onDateRangeChange, className }: DateRangePickerProps) {
-  const [isOpen, setIsOpen] = useState(false)
   const [dateRange, setDateRange] = useState<DateRange>({
     startDate: "",
     endDate: ""
@@ -27,10 +26,7 @@ export function DateRangePicker({ onDateRangeChange, className }: DateRangePicke
     onDateRangeChange(newRange)
   }
 
-  const formatDisplayDate = (dateString: string) => {
-    if (!dateString) return "Select dates"
-    return new Date(dateString).toLocaleDateString()
-  }
+
 
   return (
     <Card className={`transition-all duration-300 hover:shadow-lg ${className}`}>

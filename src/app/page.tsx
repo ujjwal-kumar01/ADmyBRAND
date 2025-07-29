@@ -50,7 +50,7 @@ export default function Home() {
             </button>
           </div>
           <p className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200 max-w-2xl mx-auto px-4">
-            Welcome to your analytics dashboard. Here's an overview of your performance.
+            Welcome to your analytics dashboard. Here&apos;s an overview of your performance.
           </p>
           <ClientOnly fallback={<div className="h-4" />}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-2">

@@ -51,7 +51,7 @@ export function RevenueChart({ data = revenueData }: RevenueChartProps) {
               tickFormatter={(value) => `$${value}`}
             />
             <Tooltip 
-              content={({ active, payload, label }) => {
+              content={({ active, payload }) => {
                 if (active && payload && payload.length) {
                   return (
                     <div className="rounded-lg border bg-background p-3 shadow-lg transition-all duration-200 hover:shadow-xl">
